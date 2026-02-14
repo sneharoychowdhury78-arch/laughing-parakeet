@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine? ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Baloo 2', cursive;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background:linear-gradient(135deg,#ff4e50,#ff9068);
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* Cute bold text with thin black border */
+h2, #complimentBox, #message{
+  font-weight:800;
+  text-shadow:
+    -1px -1px 0 black,
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black;
+}
+
+.container{
+  max-width:400px;
+  position:relative;
+  z-index:2;
+}
+
+button{
+  padding:12px 25px;
+  margin:10px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+#yesBtn{
+  background:white;
+  color:#ff4e50;
+}
+
+#noBtn{
+  background:#222;
+  color:white;
+}
+
+.hidden{display:none;}
+
+video{
+  margin-top:15px;
+  border-radius:15px;
+  max-width:100%;
+}
+
+/* BIG THUMPING HEART */
+.bigHeart{
+  position:fixed;
+  font-size:200px;
+  opacity:0.15;
+  animation:thump 1.2s infinite;
+  z-index:0;
+}
+
+@keyframes thump{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+/* Floating hearts */
+.heart{
+  position:fixed;
+  bottom:-50px;
+  font-size:25px;
+  animation:floatUp linear infinite;
+  opacity:0.6;
+}
+
+@keyframes floatUp{
+  from{
+    transform:translateY(0);
+    opacity:0.6;
+  }
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bigHeart">❤️</div>
+
+<div class="container" id="mainBox">
+  <h2>Sanvi, will you be my Valentine for the rest of my life? ❤️</h2>
+  <button id="yesBtn">Yes</button>
+  <button id="noBtn">No</button>
+</div>
+
+<div class="container hidden" id="loveSection">
+  <h2>I Love You ❤️</h2>
+  <div id="complimentBox">Tap 12 times to unlock something special ✨</div>
+  <div id="message"></div>
+
+  <video id="loveVideo" class="hidden" controls>
+    <source src="YOUR_VIDEO_LINK_HERE" type="video/mp4">
+  </video>
+</div>
+
+<script>
+let yesBtn=document.getElementById("yesBtn");
+let noBtn=document.getElementById("noBtn");
+let mainBox=document.getElementById("mainBox");
+let loveSection=document.getElementById("loveSection");
+let complimentBox=document.getElementById("complimentBox");
+let message=document.getElementById("message");
+let video=document.getElementById("loveVideo");
+
+let yesScale=1;
+
+/* No button makes Yes bigger */
+noBtn.addEventListener("click",()=>{
+  yesScale+=0.3;
+  yesBtn.style.transform=`scale(${yesScale})`;
+});
+
+/* Yes button opens love section */
+yesBtn.addEventListener("click",()=>{
+  mainBox.classList.add("hidden");
+  loveSection.classList.remove("hidden");
+});
+
+/* Compliments */
+let compliments=[
+"You have the cutest smile.",
+"You make my days brighter.",
+"You are stronger than you think.",
+"You are beautifully different.",
+"Your voice feels comforting.",
+"You notice small efforts.",
+"You are genuinely kind.",
+"You make simple moments special.",
+"You are effortlessly adorable.",
+"You inspire me to be better.",
+"You are my favorite notification.",
+"I loved you, I love you, and I will always love you ❤️"
+];
+
+let count=0;
+
+/* TAP ANYWHERE TO UNLOCK */
+loveSection.addEventListener("click",()=>{
+  if(count<compliments.length){
+    message.innerText=compliments[count];
+    count++;
+
+    if(count===compliments.length){
+      video.classList.remove("hidden");
+      video.play();
+    }
+  }
+});
+
+/* Floating hearts generator */
+function createHeart(){
+  let heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerText="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(4+Math.random()*4)+"s";
+  document.body.appendChild(heart);
+
+  setTimeout(()=>heart.remove(),8000);
+}
+
+setInterval(createHeart,500);
+</script>
+
+</body>
+</html>
